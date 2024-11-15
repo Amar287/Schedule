@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعداد الجدول الدراسي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>إعداد الجدول الدراسي</h1>
+        <form id="scheduleForm">
+            <!-- اختيار الأيام -->
+            <label>اختر الأيام:</label><br>
+            <div class="days-checkbox">
+                <label><input type="checkbox" name="days" value="Saturday"> Saturday</label>
+                <label><input type="checkbox" name="days" value="Sunday"> Sunday</label>
+                <label><input type="checkbox" name="days" value="Monday"> Monday</label>
+                <label><input type="checkbox" name="days" value="Tuesday"> Tuesday</label>
+                <label><input type="checkbox" name="days" value="Wednesday"> Wednesday</label>
+                <label><input type="checkbox" name="days" value="Thursday"> Thursday</label>
+                <label><input type="checkbox" name="days" value="Friday"> Friday</label>
+            </div>
+
+            <!-- اختيار المواد -->
+            <label>اختر المواد:</label><br>
+            <select name="subjects" multiple required>
+                <option value="Arabic">اللغة العربية</option>
+                <option value="English">اللغة الإنجليزية</option>
+                <option value="Math">الرياضيات</option>
+                <option value="Physics">الفيزياء</option>
+                <option value="Chemistry">الكيمياء</option>
+                <option value="Biology">الأحياء</option>
+                <option value="French">الفرنسية</option>
+            </select><br>
+
+            <!-- الأوقات المشغولة -->
+            <label>الأوقات المشغولة:</label><br>
+            <div id="busyTimesContainer"></div>
+
+            <!-- مدة الدراسة لكل مادة -->
+            <label>مدة الدراسة لكل مادة (بالدقائق):</label>
+            <input type="number" name="studyDuration" placeholder="90" required><br>
+
+            <button type="submit">إنشاء الجدول</button>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
