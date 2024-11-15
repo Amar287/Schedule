@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
     const days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const timeOptions = Array.from({ length: 48 }, (_, i) => {
@@ -53,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const subjects = formData.getAll('subjects');
         const busyTimes = {};
         const studyDuration = parseInt(formData.get('studyDuration'), 10) || 90;
+        const subjectsPerDay = parseInt(formData.get('subjectsPerDay'), 10) || 2;
 
         days.forEach(day => {
             busyTimes[day] = {
@@ -67,7 +66,11 @@ document.addEventListener('DOMContentLoaded', function() {
             let currentTime = new Date("2023-01-01T14:00:00");
             schedule[day] = {};
 
-            subjects.forEach(subject => {
+            const shuffledSubjects = shuffleArray(subjects);
+
+            for (let i = 0; i < subjectsPerDay; i++) {
+                const subject = shuffledSubjects[i % subjects.length];
+
                 if (busyTimes[day] && busyTimes[day].start && busyTimes[day].end) {
                     const busyStartTime = new Date(`2023-01-01T${busyTimes[day].start}`);
                     const busyEndTime = new Date(`2023-01-01T${busyTimes[day].end}`);
@@ -81,11 +84,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 const sessionTime = `${currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${endTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
                 schedule[day][subject] = sessionTime;
                 currentTime = endTime;
-            });
+            }
         });
 
         displaySchedule(schedule, days, subjects);
     });
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
     function displaySchedule(schedule, days, subjects) {
         const scheduleTable = document.createElement('table');
