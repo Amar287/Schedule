@@ -162,6 +162,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function downloadTableAsXLSX(table) {
         const workbook = XLSX.utils.book_new();
         const worksheet = XLSX.utils.table_to_sheet(table);
+
+        // Set column widths
+        const colWidths = Array.from({ length: table.rows[0].cells.length }, () => ({ wch: 20 }));
+        worksheet['!cols'] = colWidths;
+
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Schedule');
         XLSX.writeFile(workbook, 'schedule.xlsx');
     }
