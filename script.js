@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const timeOptions = Array.from({ length: 48 }, (_, i) => {
-        const hours = String(Math.floor(i / 2)).padStart(2, '0');
+        const hours = Math.floor(i / 2);
         const minutes = i % 2 === 0 ? '00' : '30';
-        return `${hours}:${minutes}`;
+        const period = hours >= 12 ? 'PM' : 'AM';
+        const hour12 = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+        return `${String(hour12).padStart(2, '0')}:${minutes} ${period}`;
     });
 
     const busyTimesContainer = document.getElementById('busyTimesContainer');
