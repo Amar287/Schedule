@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
     const timeOptions = Array.from({ length: 48 }, (_, i) => {
-        const hours = Math.floor(i / 2);
+        const hours = String(Math.floor(i / 2)).padStart(2, '0');
         const minutes = i % 2 === 0 ? '00' : '30';
-        const period = hours >= 12 ? 'PM' : 'AM';
-        const hour12 = hours % 12 || 0; // Convert 0 to 12 for 12-hour format
-        return `${String(hour12).padStart(2, '0')}:${minutes} ${period}`;
+        return `${hours}:${minutes}`;
     });
 
     const busyTimesContainer = document.getElementById('busyTimesContainer');
@@ -164,11 +162,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function downloadTableAsXLSX(table) {
         const workbook = XLSX.utils.book_new();
         const worksheet = XLSX.utils.table_to_sheet(table);
-
-        // Set column widths
-        const colWidths = Array.from({ length: table.rows[0].cells.length }, () => ({ wch: 20 }));
-        worksheet['!cols'] = colWidths;
-
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Schedule');
         XLSX.writeFile(workbook, 'schedule.xlsx');
     }
