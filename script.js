@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const hours = Math.floor(i / 2);
         const minutes = i % 2 === 0 ? '00' : '30';
         const period = hours >= 12 ? 'PM' : 'AM';
-        const hour12 = hours % 12 || 12; // Convert 0 to 12 for 12-hour format
+        const hour12 = hours % 12 || 0; // Convert 0 to 12 for 12-hour format
         return `${String(hour12).padStart(2, '0')}:${minutes} ${period}`;
     });
 
